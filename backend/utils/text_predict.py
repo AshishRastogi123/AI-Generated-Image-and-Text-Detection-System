@@ -1,10 +1,14 @@
 import joblib
 import re
-
+import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
+nltk.download('punkt')
+nltk.download('punkt_tab')
+nltk.download('stopwords')
+nltk.download('wordnet')
 # load model
 model = joblib.load(open("models/ai_text_detector_model.joblib", "rb"))
 

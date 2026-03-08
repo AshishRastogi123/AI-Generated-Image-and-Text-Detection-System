@@ -1,10 +1,10 @@
-import pickle
+import joblib
 import librosa
 import numpy as np
 
 
 # load trained model
-model = pickle.load(open("models/voice_model.pkl","rb"))
+model = joblib.load("models/voice_detection_model.pkl")
 
 
 # -------------------------
@@ -15,7 +15,7 @@ def extract_features(file_path):
 
     audio, sr = librosa.load(file_path, sr=22050)
 
-    mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=40)
+    mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)
 
     mfcc_scaled = np.mean(mfcc.T, axis=0)
 

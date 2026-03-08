@@ -20,6 +20,20 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 def home():
     return render_template("index.html")
 
+@app.route("/text")
+def text_page():
+    return render_template("text.html")
+
+
+@app.route("/image")
+def image_page():
+    return render_template("image.html")
+
+
+@app.route("/voice")
+def voice_page():
+    return render_template("voice.html")
+
 
 # -----------------------------
 # TEXT DETECTION
