@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 import os
 
+import warnings
+warnings.filterwarnings("ignore")
+
 # prediction functions
 from utils.text_predict import predict_text
 from utils.image_predict import predict_image

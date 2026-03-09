@@ -5,10 +5,18 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
-nltk.download('punkt')
-nltk.download('punkt_tab')
-nltk.download('stopwords')
-nltk.download('wordnet')
+
+packages = [
+    ('tokenizers/punkt', 'punkt'),
+    ('corpora/stopwords', 'stopwords'),
+    ('corpora/wordnet', 'wordnet')
+]
+
+for path, package in packages:
+    try:
+        nltk.data.find(path)
+    except LookupError:
+        nltk.download(package)
 # load model
 model = joblib.load(open("models/ai_text_detector_model.joblib", "rb"))
 
