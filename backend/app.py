@@ -10,7 +10,7 @@ from utils.image_predict import predict_image
 from utils.voice_predict import predict_voice
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="statics", static_url_path="/statics")
 
 UPLOAD_FOLDER = "uploads"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
