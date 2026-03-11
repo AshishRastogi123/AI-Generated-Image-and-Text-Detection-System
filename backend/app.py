@@ -44,14 +44,17 @@ def voice_page():
 @app.route("/predict_text", methods=["POST"])
 def text_detection():
 
-    text = request.form["text"]
+    text = request.form.get("text")
+
+    if not text:
+        return "No text provided"
 
     prediction, confidence = predict_text(text)
 
     return render_template(
         "result.html",
         prediction=prediction,
-        confidence=confidence
+        confidence=round(confidence * 100, 2)
     )
 
 
@@ -75,7 +78,8 @@ def image_detection():
     return render_template(
         "result.html",
         prediction=prediction,
-        confidence=confidence
+        confidence=round(confidence * 100, 2),
+        image=file.filename
     )
 
 

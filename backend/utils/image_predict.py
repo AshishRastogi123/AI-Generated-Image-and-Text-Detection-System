@@ -1,36 +1,44 @@
 import numpy as np
-import cv2
-import joblib
+from tensorflow.keras.models import load_model
+from PIL import Image
 
-# load both models
-model1 = joblib.load(open("models/ai_text_detector_model.joblib", "rb"))
-model2 = joblib.load(open("models/tfidf_vectorizer.joblib", "rb"))
+# model load
+model = load_model("models/deepfake_model.h5")
 
 
-def preprocess_image(image_path):
+def preprocess_image(img_path):
 
-    img = cv2.imread(image_path)
+    # image open and resize
+    img = Image.open(img_path).convert("RGB")
+    img = img.resize((128, 128))
 
-    img = cv2.resize(img,(128,128))
+    # convert to numpy array
+    img = np.array(img)
 
-    img = img.flatten()
+    # normalization
+    img = img / 255.0
+
+    # add batch dimension
+    img = np.expand_dims(img, axis=0)
 
     return img
 
 
-def predict_image(image_path):
+def predict_image(img_path):
 
-    img = preprocess_image(image_path)
+    processed = preprocess_image(img_path)
 
-    img = vectorizer.transform([img])
+    prediction = model.predict(processed)[0][0]
 
-    prediction = model.predict(img)[0]
-
-    confidence = model.predict_proba(img).max()
-
-    if prediction == 1:
-        label = "AI Generated Image"
+    if prediction > 0.5:
+        label = "Fake Image"
+        # Confidence: how close to 1.0 (Fake)
+        confidence = prediction
     else:
         label = "Real Image"
+        # Confidence: how close to 0.0 (Real)
+        confidence = 1 - prediction
 
-    return label, round(confidence*100,2)
+    confidence = round(float(confidence), 2)
+
+    return label, confidence
