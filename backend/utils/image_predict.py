@@ -32,11 +32,9 @@ def predict_image(img_path):
 
     if prediction > 0.5:
         label = "Fake Image"
-        # Confidence: how close to 1.0 (Fake)
         confidence = prediction
     else:
         label = "Real Image"
-        # Confidence: how close to 0.0 (Real)
         confidence = 1 - prediction
 
     confidence = round(float(confidence), 2)

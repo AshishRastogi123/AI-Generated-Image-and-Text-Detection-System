@@ -54,7 +54,7 @@ def text_detection():
     return render_template(
         "result.html",
         prediction=prediction,
-        confidence=round(confidence * 100, 2)
+        confidence=round(confidence , 2)
     )
 
 
@@ -78,7 +78,7 @@ def image_detection():
     return render_template(
         "result.html",
         prediction=prediction,
-        confidence=round(confidence * 100, 2),
+        confidence=round(confidence*100 , 2),
         image=file.filename
     )
 
